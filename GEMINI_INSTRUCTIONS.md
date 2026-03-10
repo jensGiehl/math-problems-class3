@@ -17,3 +17,4 @@
 7.  **JUnit Tests**: Write unit tests using JUnit and AssertJ.
 8.  **Static Imports**: Use static imports where appropriate to improve readability.
 9.  **Imports**: Always import classes. Do not use fully qualified names (e.g., import `java.util.Objects` instead of using `java.util.Objects` in the code).
+10. **Java 23**: Use Java 23 features where applicable (e.g., records, pattern matching, switch expressions, text blocks, etc.).
