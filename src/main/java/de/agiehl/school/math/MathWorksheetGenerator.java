@@ -244,8 +244,8 @@ public class MathWorksheetGenerator {
 
         List<String> problems = new ArrayList<>();
 
-        for (int i = 0; i < 25; i++) {
-            int type = i % 10;
+        for (int i = 0; i < 35; i++) {
+            int type = i % 35;
             switch (type) {
                 case 0:
                     int ranzen = (random.nextInt(5) + 5) * 100;
@@ -300,8 +300,135 @@ public class MathWorksheetGenerator {
                     problems.add("Ein Hund wiegt " + hund + " kg. Eine Katze wiegt " + katze + " g.\nFrage: Wie groß ist der Gewichtsunterschied in Gramm?");
                     break;
                 case 9:
-                    int flascheLeer = (random.nextInt(10) + 10) * 10;
-                    problems.add("Eine volle 1-Liter-Flasche mit Wasser wiegt insgesamt 1150 g. Die leere Flasche wiegt " + flascheLeer + " g.\nFrage: Wie schwer ist das Wasser alleine?");
+                    int kekse = (random.nextInt(5) + 2) * 100;
+                    int dose = (random.nextInt(2) + 1) * 100;
+                    problems.add("Oma backt " + kekse + " g Kekse. Sie füllt sie in eine Dose, die " + dose + " g wiegt.\nFrage: Wie schwer ist die volle Dose?");
+                    break;
+                case 10:
+                    int seiten = (random.nextInt(5) + 3) * 10;
+                    int tage = random.nextInt(4) + 3;
+                    problems.add("Ein Buch hat " + (seiten * tage) + " Seiten. Tim liest jeden Tag " + seiten + " Seiten.\nFrage: Wie viele Tage braucht er für das ganze Buch?");
+                    break;
+                case 11:
+                    int preis = (random.nextInt(8) + 2) * 10;
+                    int anzahlStifte = random.nextInt(5) + 2;
+                    problems.add("Ein Stift kostet " + preis + " Cent. Lisa kauft " + anzahlStifte + " Stifte.\nFrage: Wie viel muss sie bezahlen?");
+                    break;
+                case 12:
+                    int start = (random.nextInt(5) + 8);
+                    int dauer = random.nextInt(3) + 1;
+                    problems.add("Der Film beginnt um " + start + ":00 Uhr und dauert " + dauer + " Stunden.\nFrage: Wann ist der Film zu Ende?");
+                    break;
+                case 13:
+                    int strecke = (random.nextInt(8) + 2) * 100;
+                    int gefahren = (random.nextInt(strecke / 100 - 1) + 1) * 100;
+                    problems.add("Die Strecke nach Berlin ist " + strecke + " km lang. Papa ist schon " + gefahren + " km gefahren.\nFrage: Wie weit müssen sie noch fahren?");
+                    break;
+                case 14:
+                    int milch = (random.nextInt(5) + 1) * 100;
+                    int becher = random.nextInt(4) + 2;
+                    problems.add("In einer Kanne sind " + (milch * becher) + " ml Milch. Sie wird auf " + becher + " Becher verteilt.\nFrage: Wie viel Milch ist in jedem Becher?");
+                    break;
+                case 15:
+                    int breite = (random.nextInt(5) + 2) * 10;
+                    int laenge = breite * 2;
+                    problems.add("Ein Rechteck ist " + laenge + " cm lang und " + breite + " cm breit.\nFrage: Wie groß ist der Umfang?");
+                    break;
+                case 16:
+                    int klasse = random.nextInt(10) + 20;
+                    int krank = random.nextInt(5) + 1;
+                    problems.add("In der Klasse 3a sind " + klasse + " Kinder. Heute sind " + krank + " Kinder krank.\nFrage: Wie viele Kinder sind in der Schule?");
+                    break;
+                case 17:
+                    int taschengeld = (random.nextInt(5) + 2) * 5;
+                    int sparen = random.nextInt(3) + 2;
+                    problems.add("Tom bekommt " + taschengeld + " Euro Taschengeld im Monat. Er spart " + sparen + " Monate lang.\nFrage: Wie viel Geld hat er gespart?");
+                    break;
+                case 18:
+                    int eier = (random.nextInt(5) + 2) * 6;
+                    problems.add("Oma kauft " + eier + " Eier. In eine Schachtel passen 6 Eier.\nFrage: Wie viele Schachteln braucht sie?");
+                    break;
+                case 19:
+                    int alter = random.nextInt(5) + 8;
+                    int opa = alter * 7;
+                    problems.add("Max ist " + alter + " Jahre alt. Sein Opa ist 7 mal so alt.\nFrage: Wie alt ist der Opa?");
+                    break;
+                case 20:
+                    int bus = random.nextInt(20) + 30;
+                    int aussteigen = random.nextInt(10) + 5;
+                    int einsteigen = random.nextInt(10) + 5;
+                    problems.add("Im Bus sitzen " + bus + " Leute. An der Haltestelle steigen " + aussteigen + " aus und " + einsteigen + " ein.\nFrage: Wie viele Leute sind jetzt im Bus?");
+                    break;
+                case 21:
+                    int regal = random.nextInt(4) + 3;
+                    int buecherProRegal = (random.nextInt(5) + 5) * 10;
+                    problems.add("In der Bücherei gibt es " + regal + " Regale. In jedem Regal stehen " + buecherProRegal + " Bücher.\nFrage: Wie viele Bücher sind es insgesamt?");
+                    break;
+                case 22:
+                    int saft = (random.nextInt(5) + 5) * 100;
+                    int glas = 200;
+                    problems.add("In einer Flasche sind " + saft + " ml Saft. Ein Glas fasst " + glas + " ml.\nFrage: Wie viele Gläser kann man füllen?");
+                    break;
+                case 23:
+                    int schritte = (random.nextInt(5) + 5) * 100;
+                    int tageLaufen = random.nextInt(5) + 3;
+                    problems.add("Lisa läuft jeden Tag " + schritte + " Schritte. Sie macht das " + tageLaufen + " Tage lang.\nFrage: Wie viele Schritte ist sie gelaufen?");
+                    break;
+                case 24:
+                    int gewinn = (random.nextInt(8) + 2) * 100;
+                    int gewinner = random.nextInt(3) + 2;
+                    while (gewinn % gewinner != 0) {
+                        gewinn = (random.nextInt(8) + 2) * 100;
+                    }
+                    problems.add("Im Lotto gewinnen 3 Freunde zusammen " + gewinn + " Euro. Sie teilen gerecht.\nFrage: Wie viel bekommt jeder?");
+                    break;
+                case 25:
+                    int startH = random.nextInt(12) + 1;
+                    int endH = startH + random.nextInt(3) + 1;
+                    problems.add("Der Unterricht beginnt um " + startH + ":00 Uhr und endet um " + endH + ":00 Uhr.\nFrage: Wie viele Stunden dauert der Unterricht?");
+                    break;
+                case 26:
+                    int totalStickers = (random.nextInt(5) + 2) * 10;
+                    int lostStickers = random.nextInt(5) + 1;
+                    problems.add("Tim hat " + totalStickers + " Sticker. Er verliert " + lostStickers + " Sticker auf dem Schulweg.\nFrage: Wie viele Sticker hat er noch?");
+                    break;
+                case 27:
+                    int rows = random.nextInt(4) + 3;
+                    int chairsPerRow = random.nextInt(5) + 4;
+                    problems.add("In der Aula stehen " + rows + " Reihen Stühle. In jeder Reihe stehen " + chairsPerRow + " Stühle.\nFrage: Wie viele Stühle gibt es insgesamt?");
+                    break;
+                case 28:
+                    int totalJuice = (random.nextInt(5) + 2) * 1000; // ml
+                    int drunk = (random.nextInt(5) + 1) * 100;
+                    problems.add("In einem Krug sind " + totalJuice + " ml Saft. Anna trinkt " + drunk + " ml.\nFrage: Wie viel Saft ist noch übrig?");
+                    break;
+                case 29:
+                    int toyPrice = (random.nextInt(5) + 2) * 5;
+                    int savedMoney = random.nextInt(5) + 5;
+                    problems.add("Ein Spielzeug kostet " + toyPrice + " Euro. Ben hat schon " + savedMoney + " Euro gespart.\nFrage: Wie viel Geld fehlt ihm noch?");
+                    break;
+                case 30:
+                    int totalPages = (random.nextInt(5) + 5) * 10;
+                    int readPages = (random.nextInt(3) + 1) * 10;
+                    problems.add("Das Buch hat " + totalPages + " Seiten. Marie hat schon " + readPages + " Seiten gelesen.\nFrage: Wie viele Seiten muss sie noch lesen?");
+                    break;
+                case 31:
+                    int balloons = (random.nextInt(5) + 2) * 3;
+                    problems.add("Auf dem Fest werden " + balloons + " Luftballons verteilt. Jedes Kind bekommt 3 Ballons.\nFrage: Wie viele Kinder bekommen Ballons?");
+                    break;
+                case 32:
+                    int lengthField = (random.nextInt(5) + 2) * 10; // m
+                    int rounds = random.nextInt(3) + 2;
+                    problems.add("Der Sportplatz ist " + lengthField + " m lang. Paul rennt " + rounds + " mal die Länge entlang.\nFrage: Wie viele Meter ist er gelaufen?");
+                    break;
+                case 33:
+                    int totalApples = (random.nextInt(5) + 2) * 4;
+                    problems.add("Opa erntet " + totalApples + " Äpfel. Er packt immer 4 Äpfel in eine Tüte.\nFrage: Wie viele Tüten füllt er?");
+                    break;
+                case 34:
+                    int cinemaTicket = random.nextInt(5) + 5;
+                    int popcorn = random.nextInt(3) + 3;
+                    problems.add("Eine Kinokarte kostet " + cinemaTicket + " Euro. Das Popcorn kostet " + popcorn + " Euro.\nFrage: Wie viel kostet der Kinobesuch insgesamt?");
                     break;
             }
         }
