@@ -2,7 +2,6 @@ package de.agiehl.school.math;
 
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -21,10 +20,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Generates a math worksheet in PDF format.
+ */
 public class MathWorksheetGenerator {
 
     private static final Random random = new Random();
 
+    /**
+     * Main method to execute the generator.
+     *
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         var dest = "MathWorksheet.pdf";
         try {
@@ -35,12 +42,16 @@ public class MathWorksheetGenerator {
         }
     }
 
+    /**
+     * Creates the PDF document.
+     *
+     * @param dest The destination path for the PDF file.
+     * @throws IOException If an I/O error occurs.
+     */
     public static void createPdf(String dest) throws IOException {
         try (var writer = new PdfWriter(dest);
              var pdf = new PdfDocument(writer);
              var document = new Document(pdf)) {
-            
-            // Default is A4 Portrait, so no need to set PageSize.A4.rotate()
 
             var font = PdfFontFactory.createFont("src/main/resources/DejaVuSans.ttf", PdfEncodings.IDENTITY_H);
             document.setFont(font);
@@ -95,7 +106,6 @@ public class MathWorksheetGenerator {
         document.add(new Paragraph("\n"));
 
         document.add(new Paragraph("c) Vervollständige die Tabelle:"));
-        // Optimized column widths: First column smaller, others wider
         var table2 = new Table(UnitValue.createPercentArray(new float[]{0.5f, 2f, 2f, 2f, 2f}));
         table2.setHorizontalAlignment(HorizontalAlignment.CENTER);
         table2.setTextAlignment(TextAlignment.CENTER);
