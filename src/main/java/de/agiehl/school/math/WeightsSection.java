@@ -7,7 +7,9 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.UnitValue;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class WeightsSection implements WorksheetSection {
 
@@ -44,10 +46,19 @@ public class WeightsSection implements WorksheetSection {
     private void addComparisonTasks(Document document) {
         document.add(new Paragraph("b) Setze <, > oder = ein:"));
         var table = new Table(UnitValue.createPercentArray(3)).useAllAvailableWidth();
-        for (int i = 0; i < 9; i++) {
+        
+        Set<String> usedTasks = new HashSet<>();
+        int count = 0;
+        while (count < 9) {
             String left = generateWeight();
             String right = generateWeight();
-            table.addCell(new Cell().add(new Paragraph(left + " ___ " + right)));
+            String key = left + "_" + right;
+            String reverseKey = right + "_" + left;
+            
+            if (usedTasks.add(key) && usedTasks.add(reverseKey)) {
+                table.addCell(new Cell().add(new Paragraph(left + " ___ " + right)));
+                count++;
+            }
         }
         document.add(table);
         document.add(new Paragraph("\n"));
@@ -63,33 +74,49 @@ public class WeightsSection implements WorksheetSection {
 
     private void addTotalWeightTasks(Document document) {
         document.add(new Paragraph("c) Berechne das Gesamtgewicht:"));
-        for (int i = 0; i < 4; i++) {
+        
+        Set<String> usedTasks = new HashSet<>();
+        int count = 0;
+        while (count < 4) {
             int m = (random.nextInt(5) + 1) * 100;
             int z = (random.nextInt(5) + 1) * 100;
             int b = (random.nextInt(5) + 1) * 100;
-            document.add(new Paragraph("Einkauf: Mehl (" + m + " g), Zucker (" + z + " g), Butter (" + b + " g)"));
-            Paragraph p = new Paragraph("Gesamtgewicht: ________________");
-            p.setMarginBottom(10f);
-            document.add(p);
+            String key = m + "_" + z + "_" + b;
+            
+            if (usedTasks.add(key)) {
+                document.add(new Paragraph("Einkauf: Mehl (" + m + " g), Zucker (" + z + " g), Butter (" + b + " g)"));
+                Paragraph p = new Paragraph("Gesamtgewicht: ________________");
+                p.setMarginBottom(10f);
+                document.add(p);
+                count++;
+            }
         }
         document.add(new Paragraph("\n"));
     }
 
     private void addFillInTheBlanksTasks(Document document) {
         document.add(new Paragraph("d) Ergänze:"));
-        for (int i = 0; i < 6; i++) {
+        
+        Set<String> usedTasks = new HashSet<>();
+        int count = 0;
+        while (count < 6) {
             int target = random.nextBoolean() ? 1000 : 500;
             String targetStr = target == 1000 ? "1 kg" : "500 g";
             int part = (random.nextInt(target / 100 - 1) + 1) * 100;
-
-            Paragraph p;
-            if (random.nextBoolean()) {
-                p = new Paragraph("_______ g + " + part + " g = " + targetStr);
-            } else {
-                p = new Paragraph(part + " g + _______ g = " + targetStr);
+            boolean firstBlank = random.nextBoolean();
+            String key = target + "_" + part + "_" + firstBlank;
+            
+            if (usedTasks.add(key)) {
+                Paragraph p;
+                if (firstBlank) {
+                    p = new Paragraph("_______ g + " + part + " g = " + targetStr);
+                } else {
+                    p = new Paragraph(part + " g + _______ g = " + targetStr);
+                }
+                p.setMarginBottom(5f);
+                document.add(p);
+                count++;
             }
-            p.setMarginBottom(5f);
-            document.add(p);
         }
         document.add(new Paragraph("\n"));
     }

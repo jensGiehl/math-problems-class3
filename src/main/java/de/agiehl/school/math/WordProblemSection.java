@@ -23,13 +23,17 @@ public class WordProblemSection implements WorksheetSection {
         document.add(new Paragraph("3. Sachrechnen").setBold().setFontSize(14));
 
         List<String> problems = new ArrayList<>();
-        for (Supplier<String> generator : problemGenerators) {
-            problems.add(generator.get());
+        // Since there are 35 distinct generators and we only need 10,
+        // we can shuffle the generators and pick the first 10.
+        // This guarantees no duplicate problem types.
+        List<Supplier<String>> selectedGenerators = new ArrayList<>(problemGenerators);
+        Collections.shuffle(selectedGenerators);
+
+        for (int i = 0; i < 10; i++) {
+            problems.add(selectedGenerators.get(i).get());
         }
 
-        Collections.shuffle(problems);
-
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 10; i++) {
             document.add(new Paragraph((i + 1) + ". " + problems.get(i)));
             document.add(new Paragraph("Rechnung: __________________________________________________"));
             document.add(new Paragraph("Antwort: ___________________________________________________"));

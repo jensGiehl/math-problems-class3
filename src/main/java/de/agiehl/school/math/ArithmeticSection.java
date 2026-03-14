@@ -9,7 +9,12 @@ import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class ArithmeticSection implements WorksheetSection {
 
@@ -29,12 +34,20 @@ public class ArithmeticSection implements WorksheetSection {
     private void addMultiplicationTasks(Document document) {
         document.add(new Paragraph("a) Löse die Aufgaben:"));
         var table = new Table(UnitValue.createPercentArray(3)).useAllAvailableWidth();
-        for (int i = 0; i < 6; i++) {
+        
+        Set<String> usedTasks = new HashSet<>();
+        int count = 0;
+        while (count < 6) {
             int a = random.nextInt(9) + 1;
             int b = random.nextInt(9) + 1;
-            table.addCell(new Cell().add(new Paragraph(String.format("%d \u00B7 %d =", a, b))));
-            table.addCell(new Cell().add(new Paragraph(String.format("%d \u00B7 %d =", a, b * 10))));
-            table.addCell(new Cell().add(new Paragraph(String.format("%d \u00B7 %d =", a, b * 100))));
+            String key = Math.min(a, b) + "_" + Math.max(a, b);
+            
+            if (usedTasks.add(key)) {
+                table.addCell(new Cell().add(new Paragraph(String.format("%d \u00B7 %d =", a, b))));
+                table.addCell(new Cell().add(new Paragraph(String.format("%d \u00B7 %d =", a, b * 10))));
+                table.addCell(new Cell().add(new Paragraph(String.format("%d \u00B7 %d =", a, b * 100))));
+                count++;
+            }
         }
         document.add(table);
         document.add(new Paragraph("\n"));
@@ -49,19 +62,22 @@ public class ArithmeticSection implements WorksheetSection {
         document.add(new Paragraph("\n"));
 
         var table = new Table(UnitValue.createPercentArray(1)).useAllAvailableWidth();
-        for (int i = 0; i < 3; i++) {
-            int target;
-            do {
-                target = (random.nextInt(8) + 2) * 100;
-            } while (target == 400);
-
-            Cell cell = new Cell().setBorder(Border.NO_BORDER);
-            cell.add(new Paragraph("Zielzahl: " + target).setBold());
-            cell.add(new Paragraph("____ \u00B7 ____ = " + target));
-            cell.add(new Paragraph("____ \u00B7 ____ = " + target));
-            cell.add(new Paragraph("____ \u00B7 ____ = " + target));
-            cell.add(new Paragraph("\n"));
-            table.addCell(cell);
+        Set<Integer> usedTargets = new HashSet<>();
+        usedTargets.add(400); // Exclude example
+        
+        int count = 0;
+        while (count < 3) {
+            int target = (random.nextInt(8) + 2) * 100;
+            if (usedTargets.add(target)) {
+                Cell cell = new Cell().setBorder(Border.NO_BORDER);
+                cell.add(new Paragraph("Zielzahl: " + target).setBold());
+                cell.add(new Paragraph("____ \u00B7 ____ = " + target));
+                cell.add(new Paragraph("____ \u00B7 ____ = " + target));
+                cell.add(new Paragraph("____ \u00B7 ____ = " + target));
+                cell.add(new Paragraph("\n"));
+                table.addCell(cell);
+                count++;
+            }
         }
         document.add(table);
         document.add(new Paragraph("\n"));
@@ -75,10 +91,17 @@ public class ArithmeticSection implements WorksheetSection {
         table.useAllAvailableWidth();
 
         table.addCell(new Cell().add(new Paragraph("\u00B7").setBold()).setHeight(30));
-        int f1 = random.nextInt(8) + 2;
-        int f2 = random.nextInt(8) + 2;
-        int f3 = random.nextInt(8) + 2;
-        int f4 = random.nextInt(8) + 2;
+        
+        List<Integer> factors = new ArrayList<>();
+        for (int i = 2; i <= 9; i++) {
+            factors.add(i);
+        }
+        Collections.shuffle(factors);
+        int f1 = factors.get(0);
+        int f2 = factors.get(1);
+        int f3 = factors.get(2);
+        int f4 = factors.get(3);
+        
         table.addCell(new Cell().add(new Paragraph(String.valueOf(f1)).setBold()).setHeight(30));
         table.addCell(new Cell().add(new Paragraph(String.valueOf(f2)).setBold()).setHeight(30));
         table.addCell(new Cell().add(new Paragraph(String.valueOf(f3)).setBold()).setHeight(30));
@@ -108,10 +131,21 @@ public class ArithmeticSection implements WorksheetSection {
     private void addCommutativeTasks(Document document) {
         document.add(new Paragraph("d) Schreibe die Tauschaufgabe und löse:"));
         document.add(new Paragraph("Beispiel: 5 \u00B7 30 = 150  Tauschaufgabe: 30 \u00B7 5 = 150").setFontSize(10).setItalic());
-        for (int i = 0; i < 4; i++) {
+        
+        Set<String> usedTasks = new HashSet<>();
+        usedTasks.add("5_30"); // Exclude example equivalents
+        usedTasks.add("30_5");
+        
+        int count = 0;
+        while (count < 4) {
             int a = random.nextInt(9) + 1;
             int b = (random.nextInt(9) + 1) * 10;
-            document.add(new Paragraph(String.format("%d \u00B7 %d = ____  Tauschaufgabe: ____ \u00B7 ____ = ____", a, b)));
+            String key = Math.min(a, b/10) + "_" + Math.max(a, b/10); // Check base numbers to avoid duplicates like 3*40 and 4*30
+            
+            if (usedTasks.add(key)) {
+                document.add(new Paragraph(String.format("%d \u00B7 %d = ____  Tauschaufgabe: ____ \u00B7 ____ = ____", a, b)));
+                count++;
+            }
         }
         document.add(new Paragraph("\n"));
     }
@@ -119,16 +153,24 @@ public class ArithmeticSection implements WorksheetSection {
     private void addDivisionTasks(Document document) {
         document.add(new Paragraph("e) Dividiere:"));
         var table = new Table(UnitValue.createPercentArray(2)).useAllAvailableWidth();
-        for (int i = 0; i < 8; i++) {
+        
+        Set<String> usedTasks = new HashSet<>();
+        int count = 0;
+        while (count < 8) {
             int divisor = random.nextInt(8) + 2;
             int result = (random.nextInt(9) + 1) * 10;
             int dividend = result * divisor;
-            table.addCell(new Cell().add(new Paragraph(String.format("%d : %d =", dividend, divisor))));
+            String key = dividend + "_" + divisor;
+            
+            if (usedTasks.add(key)) {
+                table.addCell(new Cell().add(new Paragraph(String.format("%d : %d =", dividend, divisor))));
 
-            int divisor10 = divisor * 10;
-            int resultSmall = random.nextInt(9) + 1;
-            int dividend10 = resultSmall * divisor10;
-            table.addCell(new Cell().add(new Paragraph(String.format("%d : %d =", dividend10, divisor10))));
+                int divisor10 = divisor * 10;
+                int resultSmall = random.nextInt(9) + 1;
+                int dividend10 = resultSmall * divisor10;
+                table.addCell(new Cell().add(new Paragraph(String.format("%d : %d =", dividend10, divisor10))));
+                count++;
+            }
         }
         document.add(table);
         document.add(new Paragraph("\n"));
